@@ -24,7 +24,6 @@ function BotInit() {
   BotTweet();
 }
 
-/* BotTweet() : To retweet the matching recent tweet */
 function BotTweet() {
   
   var request = require("request")
