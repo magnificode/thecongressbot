@@ -25,7 +25,7 @@ function BotInit() {
 
 function BotTweet() {
   var request = require("request");
-
+  let runCount = 0;
   var url = "https://www.govtrack.us/api/v2/bill?congress=115&order_by=-introduced_date";
 
   request({
@@ -72,9 +72,9 @@ function BotTweet() {
 
       function staggerTweet() {
         builtTweets.delayedForEach(function(tweet){
-          // Bot.post('statuses/update', { status: tweet }, function(err, data, response) {
+          Bot.post('statuses/update', { status: tweet }, function(err, data, response) {
             console.log(tweet)
-          // });
+          });
         }, 15*60*1000); //15 minutes
       }
 
@@ -87,6 +87,9 @@ function BotTweet() {
 
   //Check the JSON file ever 30 minutes.
   setInterval(BotTweet, 30*60*1000);
+
+  console.log('Request sent. Iteration;' + runCount);
+  runCount++;
 }
 
 /* Initiate the Bot */
