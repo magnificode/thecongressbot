@@ -4,6 +4,7 @@
   "description": "A Twitter bot that tweets bills in congress",
   "main": "bot.js",
   "dependencies": {
+    "dotenv": "^4.0.0",
     "twit": "^2.1.1"
   },
   "devDependencies": {
