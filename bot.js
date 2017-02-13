@@ -106,7 +106,7 @@ function BotTweet() {
   runCount++;
 
   //Check the JSON file ever 30 minutes.
-  setInterval(BotTweet, 10*1000);
+  setInterval(BotTweet, 30*60*1000);
 
 }
 
