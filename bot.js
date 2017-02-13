@@ -81,15 +81,19 @@ function BotTweet() {
           //Report number of tweets in the pipeline.
           console.log( 'There are ' + builtTweets.length + ' tweets queued.' );
           console.log('**********************');
-          Bot.post('statuses/update', { status: array[0] }, function(err, data, response) {
-            if( array[0] ) {
-              console.log('Tweeted: ' + array[0]);
-              console.log('**********************');
-            }
-            if( err ) {
-              console.log(err);
-            }
-          });
+          const toTweet = array[0];
+
+          if ( toTweet !== undefined ) {
+            Bot.post('statuses/update', { status: toTweet }, function(err, data, response) {
+              if( toTweet ) {
+                console.log('Tweeted: ' + toTweet);
+                console.log('**********************');
+              }
+              if( err ) {
+                console.log(err);
+              }
+            });
+          }
           builtTweets.splice( 0,1 );
         }, 15*60*1000); //15 minutes
       }
