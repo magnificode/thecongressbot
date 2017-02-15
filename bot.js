@@ -33,20 +33,28 @@ function BotTweet() {
     json: true
   }, function (error, response, body) {
 
+    // If there are no erros with the request, and the file exists, proceed.
     if (!error && response.statusCode === 200) {
+      // Add all the bills to an object.
       let bills = body.objects;
       let pos = 0;
       let idsToTweet = {};
       let builtTweets = [];
 
+      // Push each bill ID to an array
       bills.forEach( function(i){
         const id = i.id;
         idsToTweet[pos] = id;
         pos++;
       } );
 
+      console.log(idsToTweet);
+
+      // For each of the ids in idsToTweet, check to see if the ID has already been tweeted.
       for( let id in idsToTweet ) {
+        // If that particular ID hasn't been tweeted, proceed.
         if( !tweeted.includes(idsToTweet[id]) ) {
+          // Set some variables for the current bill.
           const bill = bills[id];
           const link = bill.link;
           const title = bill.title;
@@ -63,6 +71,7 @@ function BotTweet() {
         }
       }
 
+      // Delayed foreach function to not innundate twitter with tweets. No more 100 tweet dumps.
       Array.prototype.delayedForEach = function(callback, timeout, thisArg){
         var i = 0,
             l = this.length,
@@ -77,12 +86,14 @@ function BotTweet() {
       };
 
       function staggerTweet() {
+        // Tweet each tweet, waiting 15 minutes between each.
         builtTweets.delayedForEach(function(tweet, index, array){
           //Report number of tweets in the pipeline.
           console.log( 'There are ' + builtTweets.length + ' tweets queued.' );
           console.log('**********************');
           const toTweet = array[0];
 
+          // If there's something to tweet.
           if ( toTweet !== undefined ) {
             Bot.post('statuses/update', { status: toTweet }, function(err, data, response) {
               if( toTweet ) {
@@ -109,7 +120,7 @@ function BotTweet() {
   console.log('**********************');
   runCount++;
 
-  //Check the JSON file ever 30 minutes.
+  //Check the JSON file ever 6 hours.
   setInterval(BotTweet, 6*60*60*1000);
 
 }
