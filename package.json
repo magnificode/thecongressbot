@@ -5,6 +5,8 @@
   "main": "bot.js",
   "dependencies": {
     "dotenv": "^4.0.0",
+    "firebase": "^3.7.5",
+    "firebase-admin": "^4.2.0",
     "twit": "^2.1.1"
   },
   "devDependencies": {
